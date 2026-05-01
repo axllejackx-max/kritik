@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRITICISM FROM ANONIM</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--black:#000000;
+--white:#e8e8e8;
+--red:#8b0000;
+--red-bright:#cc0000;
+--dim:#1a1a1a;
+--muted:#333333;
+--gray:#666666;
+}
+html{scroll-behavior:smooth}
+body{
+background:#000;
+color:var(--white);
+font-family:'Courier New',Courier,monospace;
+overflow-x:hidden;
+cursor:crosshair;
+}
+body::before{
+content:'';
+position:fixed;
+top:0;left:0;width:100%;height:100%;
+background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);
+pointer-events:none;
+z-index:9999;
+animation:scanlines 8s linear infinite;
+}
+@keyframes scanlines{0%{background-position:0 0}100%{background-position:0 100%}}
+body::after{
+content:'';
+position:fixed;
+top:0;left:0;width:100%;height:100%;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+pointer-events:none;
+z-index:9998;
+opacity:0.35;
+}
+
+#loading{
+position:fixed;
+top:0;left:0;width:100%;height:100%;
+background:#000;
+z-index:99999;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:20px;
+transition:opacity 1.2s ease;
+}
+#loading.fade-out{opacity:0;pointer-events:none}
+.load-line{
+font-size:0.75rem;
+color:var(--red-bright);
+letter-spacing:0.3em;
+opacity:0;
+animation:load-appear 0.4s ease forwards;
+}
+.load-line:nth-child(1){animation-delay:0.3s}
+.load-line:nth-child(2){animation-delay:1.1s}
+.load-line:nth-child(3){animation-delay:1.9s}
+.load-line:nth-child(4){animation-delay:2.7s;color:var(--gray)}
+@keyframes load-appear{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+.load-bar{
+width:200px;height:1px;
+background:var(--muted);
+margin-top:20px;
+opacity:0;
+animation:load-appear 0.4s ease 0.3s forwards;
+}
+.load-bar-fill{
+height:100%;width:0;
+background:var(--red-bright);
+animation:fill-bar 2.5s ease 0.5s forwards;
+}
+@keyframes fill-bar{to{width:100%}}
+
+#mute-btn{
+position:fixed;
+bottom:20px;right:20px;
+z-index:9000;
+background:rgba(0,0,0,0.8);
+border:1px solid var(--muted);
+color:var(--gray);
+font-family:'Courier New',monospace;
+font-size:0.65rem;
+letter-spacing:0.2em;
+padding:6px 10px;
+cursor:pointer;
+transition:all 0.3s;
+}
+#mute-btn:hover{border-color:var(--red-bright);color:var(--red-bright)}
+
+section{
+min-height:100vh;
+padding:80px 40px;
+position:relative;
+opacity:0;
+transform:translateY(30px);
+transition:opacity 1.2s ease,transform 1.2s ease;
+}
+section.revealed{opacity:1;transform:translateY(0)}
+
+#hero{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 20px;
+min-height:100vh;
+position:relative;
+}
+.hero-sub{
+font-size:0.65rem;
+color:var(--gray);
+letter-spacing:0.5em;
+margin-bottom:60px;
+opacity:0;
+animation:fade-slow 2s ease 0.5s forwards;
+}
+@keyframes fade-slow{from{opacity:0}to{opacity:0.6}}
+
+.glitch-wrapper{margin:20px 0;position:relative}
+.glitch{
+font-size:clamp(1.1rem,4vw,2.2rem);
+font-weight:bold;
+letter-spacing:0.15em;
+color:var(--white);
+position:relative;
+display:inline-block;
+line-height:1.4;
+}
+.glitch::before,.glitch::after{
+content:attr(data-text);
+position:absolute;
+top:0;left:0;
+width:100%;height:100%;
+}
+.glitch::before{
+color:var(--red-bright);
+animation:glitch-1 4s infinite;
+clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);
+}
+.glitch::after{
+color:#004466;
+animation:glitch-2 4s infinite;
+clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);
+}
+@keyframes glitch-1{
+0%,90%,100%{transform:translate(0)}
+92%{transform:translate(-3px,1px)}
+94%{transform:translate(2px,-1px)}
+96%{transform:translate(-1px,2px)}
+98%{transform:translate(3px,-2px)}
+}
+@keyframes glitch-2{
+0%,88%,100%{transform:translate(0)}
+90%{transform:translate(3px,-1px)}
+93%{transform:translate(-2px,2px)}
+97%{transform:translate(1px,-1px)}
+}
+.hero-for{
+font-size:clamp(0.8rem,2.5vw,1.1rem);
+letter-spacing:0.5em;
+color:var(--red-bright);
+margin:30px 0 10px;
+opacity:0;
+animation:type-in 0.05s steps(1) forwards;
+}
+.type-text{
+font-size:clamp(1.2rem,5vw,2.8rem);
+letter-spacing:0.3em;
+color:var(--white);
+overflow:hidden;
+white-space:nowrap;
+border-right:2px solid var(--red-bright);
+width:0;
+animation:typing 1.5s steps(11) 2.5s forwards, blink-caret 0.75s step-end infinite 2.5s;
+display:inline-block;
+}
+@keyframes typing{to{width:100%}}
+@keyframes blink-caret{50%{border-color:transparent}}
+.hero-hidden{
+font-size:0.6rem;
+color:var(--muted);
+letter-spacing:0.3em;
+margin-top:60px;
+opacity:0;
+animation:fade-slow 3s ease 4s forwards;
+}
+
+.flicker{animation:flicker 6s infinite}
+@keyframes flicker{
+0%,95%,100%{opacity:1}
+96%{opacity:0.4}
+97%{opacity:1}
+98%{opacity:0.2}
+99%{opacity:0.9}
+}
+
+#img-section{
+display:flex;
+align-items:center;
+justify-content:center;
+min-height:60vh;
+padding:60px 40px;
+}
+.img-frame{
+position:relative;
+max-width:600px;
+width:100%;
+overflow:hidden;
+}
+.img-frame::before{
+content:'';
+position:absolute;
+top:0;left:0;width:100%;height:100%;
+background:linear-gradient(0deg,rgba(139,0,0,0.3) 0%,transparent 40%,transparent 60%,rgba(0,0,0,0.5) 100%);
+z-index:2;
+}
+.img-frame img{
+width:100%;
+display:block;
+filter:grayscale(60%) contrast(1.2) brightness(0.7) blur(0.5px);
+animation:slow-zoom 20s ease-in-out infinite alternate;
+opacity:0;
+transition:opacity 2s ease;
+}
+.img-frame img.loaded{opacity:0.75}
+@keyframes slow-zoom{from{transform:scale(1)}to{transform:scale(1.06)}}
+.img-caption{
+position:absolute;
+bottom:0;left:0;right:0;
+padding:15px 20px;
+font-size:0.65rem;
+color:var(--gray);
+letter-spacing:0.3em;
+text-align:center;
+z-index:3;
+}
+
+.arg-layer{
+position:fixed;
+top:0;left:0;width:100%;height:100%;
+pointer-events:none;
+z-index:100;
+overflow:hidden;
+}
+.arg-text{
+position:absolute;
+font-size:0.55rem;
+color:rgba(139,0,0,0.25);
+letter-spacing:0.2em;
+white-space:nowrap;
+animation:arg-float 12s linear infinite;
+opacity:0;
+}
+@keyframes arg-float{
+0%{opacity:0;transform:translateY(20px)}
+10%{opacity:1}
+90%{opacity:1}
+100%{opacity:0;transform:translateY(-20px)}
+}
+
+.log-panel{
+position:fixed;
+bottom:60px;left:20px;
+font-size:0.5rem;
+color:rgba(0,180,0,0.2);
+letter-spacing:0.15em;
+line-height:1.8;
+pointer-events:none;
+z-index:101;
+max-width:200px;
+}
+.log-line{opacity:0;animation:log-appear 0.5s ease forwards}
+@keyframes log-appear{to{opacity:1}}
+
+#critique{
+max-width:820px;
+margin:0 auto;
+padding:80px 40px;
+}
+.section-marker{
+font-size:0.55rem;
+color:var(--red-bright);
+letter-spacing:0.5em;
+margin-bottom:40px;
+opacity:0.7;
+}
+.critique-block{
+margin-bottom:70px;
+border-left:1px solid var(--muted);
+padding-left:30px;
+}
+.critique-block:hover{border-left-color:var(--red)}
+.block-num{
+font-size:0.55rem;
+color:var(--gray);
+letter-spacing:0.4em;
+margin-bottom:12px;
+}
+.block-title{
+font-size:clamp(0.85rem,2vw,1.1rem);
+color:var(--red-bright);
+letter-spacing:0.2em;
+margin-bottom:20px;
+line-height:1.5;
+}
+.block-body{
+font-size:clamp(0.75rem,1.5vw,0.88rem);
+color:#aaaaaa;
+line-height:2.2;
+letter-spacing:0.05em;
+}
+.block-body p{margin-bottom:16px}
+.highlight{
+color:var(--white);
+font-style:italic;
+}
+.cold{
+color:var(--red-bright);
+font-weight:bold;
+display:block;
+margin:20px 0;
+font-size:0.9em;
+letter-spacing:0.1em;
+}
+.redact{
+background:var(--red);
+color:transparent;
+user-select:none;
+padding:0 2px;
+font-size:0.8em;
+}
+.redact:hover{background:transparent;color:var(--red-bright)}
+.divider{
+width:40px;height:1px;
+background:var(--muted);
+margin:50px 0;
+}
+
+#ending{
+min-height:60vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:80px 40px;
+position:relative;
+}
+.end-text{
+font-size:clamp(1rem,3vw,1.5rem);
+letter-spacing:0.4em;
+color:var(--white);
+margin-bottom:30px;
+animation:flicker 3s infinite;
+}
+.end-sub{
+font-size:0.6rem;
+color:var(--muted);
+letter-spacing:0.5em;
+line-height:2;
+}
+.end-dot{
+width:4px;height:4px;
+border-radius:50%;
+background:var(--red-bright);
+margin:40px auto;
+animation:pulse-dot 2s ease infinite;
+}
+@keyframes pulse-dot{
+0%,100%{box-shadow:0 0 0 0 rgba(204,0,0,0.6)}
+50%{box-shadow:0 0 0 12px rgba(204,0,0,0)}
+}
+
+@media(max-width:600px){
+section{padding:60px 20px}
+#critique{padding:60px 20px}
+.critique-block{padding-left:15px}
+.glitch{font-size:1.1rem}
+.log-panel{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="loading">
+<div class="load-line">INITIALIZING ANONYMOUS CHANNEL...</div>
+<div class="load-line">ENCRYPTING SOURCE...</div>
+<div class="load-line">LOADING MESSAGE...</div>
+<div class="load-line">THIS MESSAGE WAS NOT MEANT TO BE FOUND</div>
+<div class="load-bar"><div class="load-bar-fill"></div></div>
+</div>
+
+<audio id="bg-audio" loop>
+<source src="critiksm.mp3" type="audio/mpeg">
+</audio>
+
+<button id="mute-btn">[ MUTE ]</button>
+
+<div class="arg-layer" id="arg-layer"></div>
+<div class="log-panel" id="log-panel"></div>
+
+<section id="hero">
+<div class="hero-sub flicker">// ANONYMOUS TRANSMISSION // UNVERIFIED SOURCE //</div>
+<div class="glitch-wrapper">
+<div class="glitch flicker" data-text="WELCOME TO CRITICISM FROM ANONIM">WELCOME TO CRITICISM FROM ANONIM</div>
+</div>
+<div class="hero-for">FOR ALL</div>
+<div class="type-text">OSKA</div>
+<div class="hero-hidden">— This message was not meant to be found. —</div>
+</section>
+
+<div id="img-section-wrap">
+<section id="img-section">
+<div class="img-frame">
+<img src="critiksm.jpg" alt="" id="main-img">
+<div class="img-caption">[ DOCUMENT — UNCLASSIFIED — SUBJECT: SYSTEM ANALYSIS ]</div>
+</div>
+</section>
+</div>
+
+<section id="critique">
+<div class="section-marker">// BEGIN TRANSMISSION — CRITICAL ANALYSIS //</div>
+
+<div class="critique-block">
+<div class="block-num">[ 00 — PRELIMINARY ]</div>
+<div class="block-title">NIAT BAIK YANG TIDAK CUKUP UNTUK MEMBENARKAN CARANYA</div>
+<div class="block-body">
+<p>Pada permulaannya, terdapat sebuah niat. Niat untuk membentuk individu yang taat, yang beriman, yang memiliki rutinitas spiritual yang kokoh. Niat ini, secara teori, tidak dapat dipermasalahkan. Setiap sistem pendidikan berhak memiliki tujuan moral dan spiritual sebagai bagian dari visinya.</p>
+<p>Namun niat baik tidak pernah secara otomatis menghasilkan metode yang baik.</p>
+<p><span class="cold">"Tujuan yang mulia tidak mensucikan cara yang merusak."</span></p>
+<p>Inilah yang perlu dipahami sebelum membaca lebih jauh. Analisis ini bukan serangan terhadap nilai-nilai spiritual. Analisis ini adalah cermin yang diarahkan kepada sebuah sistem yang beroperasi dengan keyakinan bahwa <span class="highlight">kepatuhan adalah bukti keimanan</span>, dan bahwa tekanan adalah jalan menuju kesadaran.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="critique-block">
+<div class="block-num">[ 01 — IDENTIFIKASI MASALAH ]</div>
+<div class="block-title">PAKSAAN SEBAGAI MEKANISME UTAMA</div>
+<div class="block-body">
+<p>Yang menjadi inti dari persoalan ini bukan program ibadahnya. Bukan niatnya. Bukan pula nilai-nilai yang ingin ditanamkan. Yang menjadi masalah adalah satu hal yang tidak dapat diabaikan: <span class="highlight">adanya unsur paksaan yang disematkan secara sistematis ke dalam proses yang seharusnya bersifat personal dan sukarela</span>.</p>
+<p>Ibadah dijadikan kewajiban yang diawasi. Kehadiran dicatat. Absensi dipertanyakan. Konsekuensi diberikan bukan karena pelanggaran moral, tetapi karena ketidakhadiran fisik pada sebuah ritual yang seharusnya tumbuh dari dalam.</p>
+<p><span class="cold">"Ketika seseorang shalat karena takut dihukum, ia tidak sedang beribadah kepada Tuhan. Ia sedang beribadah kepada sistem."</span></p>
+<p>Ini bukan pernyataan yang dibuat-buat. Ini adalah konsekuensi logis dari setiap program berbasis tekanan yang pernah dijalankan atas nama pembentukan karakter.</p>
+<p>Sistem mencatat tubuh. Sistem tidak bisa mencatat hati. Dan itulah masalahnya: <span class="highlight">sistem terus berjalan seolah keduanya sama</span>.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="critique-block">
+<div class="block-num">[ 02 — DAMPAK LAPIS PERTAMA ]</div>
+<div class="block-title">IBADAH MENJADI FORMALITAS — RUTINITAS TANPA SUBSTANSI</div>
+<div class="block-body">
+<p>Ketika sebuah praktik spiritual dikenakan sebagai kewajiban administratif, terjadi sesuatu yang halus namun destruktif: <span class="highlight">ibadah kehilangan dimensi internalnya</span>.</p>
+<p>Individu tidak lagi bertanya mengapa mereka melakukan sesuatu. Mereka hanya memastikan bahwa mereka melakukannya. Kotak dicentang. Absensi dilengkapi. Prosedur dijalankan. Dan di akhir hari, sistem mencatat angka: berapa yang hadir, berapa yang tidak.</p>
+<p>Yang tidak pernah tercatat adalah: berapa yang hadir secara fisik namun tidak hadir secara jiwa. Berapa yang menjalankan gerakan ibadah sambil memikirkan cara untuk menghindarinya di lain waktu. Berapa yang berdiri di tempat ibadah dengan tubuh yang patuh namun hati yang menolak.</p>
+<p><span class="cold">"Kehadiran fisik tidak pernah setara dengan kehadiran ruhani. Sistem tidak memahami perbedaan ini. Dan itulah tragedinya."</span></p>
+<p>Formalitas adalah kuburan bagi makna. Ketika yang dihitung adalah tindakan, bukan kesadaran, yang tersisa hanyalah <span class="redact">kekosongan yang terstruktur dengan rapi</span>.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="critique-block">
+<div class="block-num">[ 03 — DAMPAK LAPIS KEDUA ]</div>
+<div class="block-title">HILANGNYA MAKNA — ALIENASI DARI NILAI YANG DIPAKSAKAN</div>
+<div class="block-body">
+<p>Ada fenomena psikologis yang telah lama didokumentasikan: semakin seseorang dipaksa melakukan sesuatu, semakin mereka kehilangan motivasi intrinsik untuk melakukannya secara sukarela. Ini bukan teori. Ini adalah pola yang terjadi berulang kali dalam berbagai konteks.</p>
+<p>Program ibadah berbasis tekanan menghasilkan generasi yang memiliki <span class="highlight">asosiasi negatif</span> dengan praktik yang dipaksakan. Bukan karena nilai-nilainya salah. Tetapi karena cara pertama kali mereka mengenalnya adalah melalui kewajiban, pengawasan, dan konsekuensi.</p>
+<p>Makna tidak bisa ditransfer melalui perintah. Makna tumbuh melalui pemahaman, pengalaman pribadi, dan kebebasan untuk memilih. Ketika kebebasan itu diambil, makna tidak bisa tumbuh. Yang tumbuh adalah resistensi.</p>
+<p><span class="cold">"Yang mereka tanam bukan iman. Yang mereka tanam adalah keterpaksaan. Dan keterpaksaan tumbuh menjadi jarak."</span></p>
+<p>Jarak antara individu dan nilai yang seharusnya menjadi bagian dari dirinya. Jarak yang, dalam banyak kasus, tidak pernah tertutup kembali setelah tekanan itu hilang.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="critique-block">
+<div class="block-num">[ 04 — DAMPAK LAPIS KETIGA ]</div>
+<div class="block-title">KETERPAKSAAN SEBAGAI WARISAN YANG TIDAK DISADARI</div>
+<div class="block-body">
+<p>Keterpaksaan tidak hanya mengubah hubungan seseorang dengan praktik yang dipaksakan. Ia mengubah cara seseorang memandang otoritas, kewajiban, dan nilai secara keseluruhan.</p>
+<p>Individu yang tumbuh dalam sistem berbasis tekanan belajar satu pelajaran paling mendasar: <span class="highlight">kepatuhan adalah strategi bertahan, bukan ekspresi keyakinan</span>. Mereka belajar membaca situasi, bukan nilai. Mereka belajar memenuhi ekspektasi, bukan membangun karakter.</p>
+<p>Dan ketika sistem itu tidak lagi ada, ketika pengawasan hilang, ketika konsekuensi tidak lagi mengancam, apa yang tersisa? Bukan kesadaran yang terbentuk. Bukan iman yang mengakar. Yang tersisa adalah kebiasaan yang lahir dari tekanan, dan kebiasaan itu runtuh begitu tekanannya hilang.</p>
+<p><span class="cold">"Tekanan menciptakan rutinitas. Bukan makna. Dan rutinitas tanpa makna adalah mesin yang berjalan tanpa tujuan."</span></p>
+<p>Warisan dari sistem ini bukan generasi yang beriman. Warisan dari sistem ini adalah generasi yang tahu bagaimana cara <span class="highlight">terlihat beriman</span> ketika ada yang menonton.</p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="critique-block">
+<div class="block-num">[ 05 — ANALISIS FUNDAMENTAL ]</div>
+<div class="block-title">IMAN TIDAK BISA DIPAKSA — KESADARAN TIDAK BISA DIREKAYASA MELALUI TEKANAN</div>
+<div class="block-body">
+<p>Terdapat sebuah kontradiksi mendasar dalam logika sistem ini: <span class="highlight">ia berusaha menciptakan kesadaran melalui mekanisme yang secara definisi meniadakan kesadaran</span>.</p>
+<p>Kesadaran adalah kondisi internal. Ia lahir dari pemahaman, dari pertanyaan, dari proses pencarian yang tidak bisa dijadwalkan dan tidak bisa diawasi. Iman, dalam pengertian paling dasarnya, adalah sesuatu yang dipilih, bukan sesuatu yang ditetapkan.</p>
+<p>Sebuah sistem yang menggunakan tekanan sebagai instrumen pembentukan keyakinan tidak sedang membangun iman. Ia sedang membangun kepatuhan. Dan dua hal ini, meskipun tampak serupa dari luar, adalah entitas yang sama sekali berbeda.</p>
+<p><span class="cold">"Jika kesadaran harus dipaksa, apakah itu masih kesadaran? Jika iman harus diancam, apakah itu masih iman?"</span></p>
+<p>Pertanyaan ini bukan retorika. Ini adalah pertanyaan yang harus dijawab oleh setiap pihak yang terlibat dalam perancangan sistem semacam ini. Karena jawaban yang jujur akan membongkar asumsi paling fundamental yang menopang seluruh program ini.</p>
+<p><span class="cold">"Yang berjalan bukan pemahaman. Hanya kepatuhan. Dan kepatuhan yang kosong adalah kebohongan yang diinstitusionalisasikan."</span></p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="critique-block">
+<div class="block-num">[ 06 — PENEGASAN KRITIK ]</div>
+<div class="block-title">SISTEM PERLU DIEVALUASI — PENDEKATAN HARUS BERUBAH</div>
+<div class="block-body">
+<p>Kritik ini bukan seruan untuk menghapus program. Kritik ini adalah seruan untuk berpikir ulang secara fundamental tentang <span class="highlight">apa yang sebenarnya ingin dicapai, dan apakah cara yang digunakan benar-benar mencapainya</span>.</p>
+<p>Jika tujuannya adalah membentuk individu yang memiliki kesadaran spiritual yang genuine, maka pendekatan berbasis paksaan tidak hanya tidak efektif, ia kontraproduktif. Ia merusak tujuan yang ingin dicapainya.</p>
+<p>Pendekatan yang lebih koheren adalah pendekatan edukatif: menjelaskan mengapa, bukan hanya menetapkan apa. Menciptakan ruang untuk pertanyaan, bukan menutup pertanyaan dengan kewajiban. Membangun relasi dengan nilai melalui pemahaman, bukan melalui tekanan.</p>
+<p><span class="cold">"Sistem yang menghargai manusia tidak akan menggunakan rasa takut sebagai instrumen pembentukan karakter."</span></p>
+<p>Evaluasi bukan ancaman. Evaluasi adalah tanda bahwa sebuah sistem cukup jujur untuk menghadapi dirinya sendiri. Sistem yang tidak bisa dievaluasi adalah sistem yang lebih takut pada kebenaran daripada pada kegagalannya sendiri.</p>
+<p>Dan sistem yang takut pada kebenaran adalah sistem yang sudah kehilangan arah sejak awal. Yang tersisa hanyalah <span class="highlight">inertia institusional</span> yang terus bergerak bukan karena ia benar, tetapi karena ia sudah terlanjur berjalan.</p>
+<p><span class="cold">"Perubahan bukan kelemahan. Ketidakmampuan berubah adalah kelemahan yang sesungguhnya."</span></p>
+</div>
+</div>
+
+<div class="section-marker" style="margin-top:60px">// END OF CRITICAL TRANSMISSION //</div>
+</section>
+
+<section id="ending">
+<div class="end-dot"></div>
+<div class="end-text">T H I N K .</div>
+<div class="end-sub">
+<span>Pesan ini tidak memiliki pengirim.</span><br>
+<span>Pesan ini tidak membutuhkan balasan.</span><br>
+<span>Pesan ini hanya membutuhkan satu hal:</span><br><br>
+<span style="color:var(--red-bright);letter-spacing:0.6em">KEJUJURAN</span><br><br>
+<span style="color:var(--muted);font-size:0.5rem">— THIS IS NOT THE END —</span>
+</div>
+</section>
+
+<script>
+(function(){
+var loaded=false;
+function init(){
+if(loaded)return;
+loaded=true;
+var audio=document.getElementById('bg-audio');
+audio.volume=0.08;
+audio.play().catch(function(){});
+setTimeout(function(){
+var l=document.getElementById('loading');
+l.classList.add('fade-out');
+setTimeout(function(){l.style.display='none';startARG()},1300);
+},3200);
+var img=document.getElementById('main-img');
+img.onload=function(){this.classList.add('loaded')};
+img.src=img.src;
+setupScrollReveal();
+setupMute();
+}
+function setupMute(){
+var btn=document.getElementById('mute-btn');
+var audio=document.getElementById('bg-audio');
+var muted=false;
+btn.addEventListener('click',function(){
+muted=!muted;
+audio.muted=muted;
+btn.textContent=muted?'[ UNMUTE ]':'[ MUTE ]';
+});
+}
+function setupScrollReveal(){
+var sections=document.querySelectorAll('section');
+var observer=new IntersectionObserver(function(entries){
+entries.forEach(function(e){
+if(e.isIntersecting){e.target.classList.add('revealed')}
+});
+},{threshold:0.08});
+sections.forEach(function(s){observer.observe(s)});
+}
+function startARG(){
+var argLayer=document.getElementById('arg-layer');
+var msgs=['observing…','compliance detected…','subject still active…','signal trace: active','anomaly logged','behavioral pattern noted','message received — or is it?','you were not supposed to find this','connection: unstable','identity: null','source: unknown','monitoring…','deviation flagged','record: ongoing','do not look up'];
+var tops=[8,15,25,35,45,55,65,75,85,92];
+var lefts=[5,20,35,50,65,75,10,45,60,80];
+var idx=0;
+function spawnMsg(){
+var el=document.createElement('div');
+el.className='arg-text';
+el.textContent=msgs[idx%msgs.length];
+el.style.top=tops[idx%tops.length]+'%';
+el.style.left=lefts[idx%lefts.length]+'%';
+el.style.animationDelay='0s';
+el.style.animationDuration=(10+Math.random()*6)+'s';
+argLayer.appendChild(el);
+idx++;
+setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el)},16000);
+setTimeout(spawnMsg,3500+Math.random()*4000);
+}
+spawnMsg();
+startLog();
+}
+function startLog(){
+var panel=document.getElementById('log-panel');
+var logs=[
+'> sys.init: complete',
+'> channel: encrypted',
+'> auth: bypassed',
+'> user: unknown',
+'> content: critical',
+'> status: transmitting',
+'> trace: none',
+'> record: active'
+];
+var i=0;
+function addLog(){
+if(i>=logs.length)return;
+var el=document.createElement('div');
+el.className='log-line';
+el.textContent=logs[i];
+el.style.animationDelay='0s';
+panel.appendChild(el);
+i++;
+if(panel.children.length>6)panel.removeChild(panel.children[0]);
+setTimeout(addLog,2200+Math.random()*1500);
+}
+setTimeout(addLog,1000);
+}
+if(document.readyState==='loading'){
+document.addEventListener('DOMContentLoaded',init);
+}else{
+init();
+}
+})();
+</script>
+</body>
+</html>
